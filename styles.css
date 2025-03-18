@@ -41,6 +41,7 @@ body {
 
 header {
   text-align: center;
+  margin: 0 auto;
 }
 
 h1 {
@@ -63,7 +64,6 @@ main {
   max-width: 75rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 2rem;
 }
 
@@ -71,8 +71,17 @@ svg {
   fill: currentColor;
 }
 
+p {
+  line-height: 1.5;
+}
+
 ul {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
+}
+
+.center {
+  text-align: center;
+  margin: 0 auto;
 }
