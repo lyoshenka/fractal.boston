@@ -36,12 +36,20 @@ body {
   font-family: var(--font-family);
   font-weight: normal;
   font-size: 1.8rem;
-  margin: 0;
+}
+
+main {
+  width: fit-content;
+  max-width: 75rem;
+  margin: 3rem auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 header {
   text-align: center;
-  margin: 0 auto;
 }
 
 h1 {
@@ -52,19 +60,16 @@ h1 {
   margin-bottom: 2rem;
 }
 
+@media screen and (max-width: 470px) {
+  .dot {
+    display: none;
+  }
+}
+
 h2 {
   color: var(--subtitle-color);
   font-size: 2.4rem;
   margin-bottom: 2rem;
-}
-
-main {
-  margin: 3rem auto;
-  padding: 0 1rem;
-  max-width: 75rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
 }
 
 svg {
