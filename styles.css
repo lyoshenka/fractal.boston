@@ -40,7 +40,7 @@ body {
 }
 
 main {
-  width: fit-content;
+  width: 100%;
   max-width: 75rem;
   margin: 3rem auto;
   padding: 1rem;
@@ -61,7 +61,7 @@ h1 {
   margin-bottom: 2rem;
 }
 
-@media screen and (max-width: 470px) {
+@media screen and (max-width: 480px) {
   .dot {
     display: none;
   }
@@ -72,15 +72,6 @@ h1 {
   font-size: 2.4rem;
   margin-bottom: 2rem;
 }  */
-
-main {
-  margin: 3rem auto;
-  padding: 0 1rem;
-  max-width: 75rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
 
 .main-cta {
   font-size: 2.4rem;
