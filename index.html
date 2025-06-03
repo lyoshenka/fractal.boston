@@ -64,15 +64,27 @@
           incredible life together.
         </p>
 
-        <a
-          href="https://forms.gle/XWAeqP5z4S8uxhH28"
-          target="_blank"
-          rel="noopener noreferrer nofollow"
-          class="main-cta"
-          id="interestFormLink"
-        >
-          <button class="block accent">Start Here</button></a
-        >
+        <div class="buttons">
+          <a
+            href="https://forms.gle/XWAeqP5z4S8uxhH28"
+            target="_blank"
+            rel="noopener noreferrer nofollow"
+            class="main-cta"
+            id="interestFormLink"
+          >
+            <button class="block accent">Start Here</button></a
+          >
+
+          <a
+            href="https://fractalboston.notion.site/Summer-2025-Courses-20063241cd3e80e7a528e2de2218dffd"
+            target="_blank"
+            rel="noopener noreferrer nofollow"
+            class="main-cta"
+            id="coursesSummer2025Link"
+          >
+            <button class="block">Summer 2025 Courses</button></a
+          >
+        </div>
       </div>
 
       <div>
@@ -185,6 +197,15 @@
           gtag("event", "button_click", {
             event_category: "engagement",
             event_label: "Interest Form Link Click",
+          });
+        });
+
+      document
+        .getElementById("coursesSummer2025Link")
+        .addEventListener("click", function () {
+          gtag("event", "button_click", {
+            event_category: "engagement",
+            event_label: "Courses Summer 2025 Link Click",
           });
         });
     </script>
