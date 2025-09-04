@@ -33,6 +33,10 @@ html {
 
 body {
   background: var(--bg-color);
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(5, 150, 105, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(5, 150, 105, 0.02) 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, rgba(5, 150, 105, 0.025) 0%, transparent 50%);
   color: var(--text-color);
   font-family: var(--font-family);
   font-weight: normal;
@@ -51,6 +55,8 @@ main {
 
 header {
   text-align: center;
+  position: relative;
+  overflow: hidden;
 }
 
 h1 {
@@ -59,6 +65,16 @@ h1 {
   font-weight: bold;
   font-size: 7.2rem;
   margin-bottom: 2rem;
+  position: relative;
+  display: inline-block;
+  animation: wobble 8s ease-in-out infinite;
+}
+
+@keyframes wobble {
+  0%, 100% { transform: rotate(-1deg); }
+  25% { transform: rotate(1deg); }
+  50% { transform: rotate(-0.5deg); }
+  75% { transform: rotate(0.5deg); }
 }
 
 @media screen and (max-width: 480px) {
@@ -88,6 +104,34 @@ h1 {
 .main-cta {
   font-size: 2.4rem;
   text-decoration: none;
+  display: inline-block;
+  transform: rotate(-0.5deg);
+  transition: transform 0.2s ease;
+}
+
+.main-cta:hover {
+  transform: rotate(0deg) scale(1.05);
+}
+
+.main-cta button {
+  border-radius: 50px 15px 50px 15px / 15px 50px 15px 50px;
+  background: var(--main-color);
+  color: white;
+  border: 3px solid var(--main-color);
+  padding: 1.2rem 3rem;
+  font-size: 2rem;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  box-shadow: 4px 4px 0 rgba(5, 150, 105, 0.3);
+}
+
+.main-cta button:hover {
+  background: white;
+  color: var(--main-color);
+  box-shadow: 6px 6px 0 rgba(5, 150, 105, 0.4);
+  border-radius: 15px 50px 15px 50px / 50px 15px 50px 15px;
 }
 
 svg {
@@ -107,4 +151,444 @@ ul {
 .center {
   text-align: center;
   margin: 0 auto;
+}
+
+.card {
+  background: #fefefe;
+  border-radius: 23% 77% 69% 31% / 29% 67% 33% 71%;
+  padding: 2.5rem;
+  margin: 2rem 0 4rem;
+  position: relative;
+  box-shadow: 4px 4px 0 rgba(5, 150, 105, 0.15);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.01);
+}
+
+.card:nth-child(odd) {
+  border-radius: 77% 23% 31% 69% / 67% 29% 71% 33%;
+}
+
+.card:nth-child(odd):hover {
+  transform: scale(1.01);
+}
+
+.member-story {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-left: 1rem;
+  margin-right: -1rem;
+  border: 1px dashed rgba(5, 150, 105, 0.3);
+  border-radius: 12px 25px 18px 30px;
+  background: #fefefe;
+  box-shadow: none;
+}
+
+.event-block {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-left: -1rem;
+  margin-right: 1rem;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.education-block {
+  background: linear-gradient(105deg, #fefefe 0%, #f0fdf4 100%);
+  border-radius: 18px 35px 22px 28px / 32% 25% 40% 35%;
+}
+
+.coworking-block {
+  border: none;
+  border-radius: 35% 15% 25% 45% / 20% 50% 30% 40%;
+  background: transparent;
+  box-shadow: none;
+}
+
+@media screen and (min-width: 768px) {
+  .member-story {
+    flex-direction: row;
+    align-items: start;
+  }
+}
+
+.member-photo {
+  width: 100%;
+  max-width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  background: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  border: 3px solid var(--main-color);
+  transform: rotate(-5deg);
+}
+
+.event-photo {
+  width: 100%;
+  max-width: 100%;
+  height: 300px;
+  border-radius: 20px 80px 30px 70px / 30% 20% 30% 20%;
+  transform: rotate(1deg);
+  margin-bottom: 1.5rem;
+  object-fit: cover;
+  background: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  font-size: 1.4rem;
+  border: 3px solid var(--main-color);
+}
+
+.story-content,
+.event-content {
+  flex: 1;
+}
+
+blockquote {
+  font-style: italic;
+  color: #374151;
+  line-height: 1.8;
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  padding-left: 2rem;
+  background: linear-gradient(90deg, rgba(5, 150, 105, 0.05) 0%, transparent 100%);
+  border-left: 4px solid var(--main-color);
+  border-radius: 0 20px 20px 0;
+  position: relative;
+}
+
+blockquote::before {
+  content: """;
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  font-size: 5rem;
+  color: var(--main-color);
+  opacity: 0.3;
+  font-family: serif;
+}
+
+.attribution {
+  text-align: right;
+  color: #6b7280;
+  font-size: 1.6rem;
+  margin-top: 1rem;
+  font-style: italic;
+}
+
+h2 {
+  color: var(--main-color);
+  font-size: 3.6rem;
+  margin: 6rem 0 2rem;
+  text-align: center;
+  position: relative;
+  font-weight: bold;
+}
+
+h2::before,
+h2::after {
+  content: "◈";
+  position: absolute;
+  color: var(--main-color);
+  opacity: 0.3;
+  font-size: 2rem;
+}
+
+h2::before {
+  left: -3rem;
+}
+
+h2::after {
+  right: -3rem;
+}
+
+h3 {
+  color: var(--main-color);
+  font-size: 2.8rem;
+  margin: 4rem 0 2rem;
+  position: relative;
+  display: inline-block;
+}
+
+h3::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--main-color);
+  transform: scaleX(0.6) rotate(-0.8deg);
+  transform-origin: left;
+  opacity: 0.5;
+}
+
+h4 {
+  color: var(--main-color);
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  display: inline-block;
+  position: relative;
+}
+
+.stay-connected {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #f0fdf4 100%);
+  border: 3px solid var(--main-color);
+  border-radius: 20px 80px 20px 80px / 80px 20px 80px 20px;
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  padding: 3rem 2.5rem;
+}
+
+.stay-connected::before {
+  content: "✦";
+  position: absolute;
+  top: 20px;
+  left: 30px;
+  font-size: 2rem;
+  color: var(--main-color);
+  opacity: 0.3;
+  animation: float 3s ease-in-out infinite;
+}
+
+.stay-connected::after {
+  content: "◈";
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+  font-size: 2rem;
+  color: var(--main-color);
+  opacity: 0.3;
+  animation: float 3s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(180deg); }
+}
+
+.stay-connected h3 {
+  color: var(--main-color);
+  margin-bottom: 1.5rem;
+  transform: none;
+}
+
+.stay-connected h3::after {
+  display: none;
+}
+
+.stay-connected p {
+  margin-bottom: 1rem;
+}
+
+.stay-connected a {
+  color: var(--main-color);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.fixed.block {
+  border-radius: 15px 85px 30px 70px / 70% 30% 70% 30%;
+  background: linear-gradient(135deg, #fefefe 0%, #f0fdf4 100%);
+  border: 2px solid var(--main-color);
+  margin-bottom: 3rem;
+}
+
+.fixed.block:hover {
+  transform: scale(1.01);
+}
+
+main > div {
+  position: relative;
+}
+
+p {
+  line-height: 1.7;
+}
+
+.decorative-element {
+  font-size: 3rem;
+  color: var(--main-color);
+  opacity: 0.3;
+  position: absolute;
+  animation: spin 20s linear infinite;
+}
+
+header .decorative-element {
+  top: 20px;
+  right: 10%;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+a {
+  color: var(--main-color);
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+a:hover {
+  color: #047857;
+}
+
+ul li {
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+ul li::before {
+  content: "◈";
+  position: absolute;
+  left: 0;
+  color: var(--main-color);
+  opacity: 0.6;
+}
+
+.activities-section {
+  margin: 3rem 0;
+  padding: 2rem 0;
+  position: relative;
+}
+
+.activities-section h3:first-of-type {
+  margin-top: 2rem;
+}
+
+/* Remove diamonds from "Things We Do Together" heading */
+.activities-section h2::before,
+.activities-section h2::after {
+  display: none;
+}
+
+/* Remove diamonds from hero card heading */
+.hero-card h2::before,
+.hero-card h2::after {
+  display: none;
+}
+
+/* Shorter underlines for non-activity sections */
+h3:not(.activities-section h3)::after {
+  transform: scaleX(0.2) rotate(-0.8deg);
+}
+
+
+/* Floating shapes around header */
+.floating-shapes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.shape {
+  position: absolute;
+  font-size: 2rem;
+  color: var(--main-color);
+  opacity: 0.2;
+  animation: float-random 8s ease-in-out infinite;
+}
+
+.shape-1 {
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+  animation-duration: 6s;
+}
+
+.shape-2 {
+  top: 60%;
+  right: 15%;
+  animation-delay: -1s;
+  animation-duration: 7s;
+}
+
+.shape-3 {
+  top: 30%;
+  right: 25%;
+  animation-delay: -2s;
+  animation-duration: 8s;
+}
+
+.shape-4 {
+  bottom: 40%;
+  left: 20%;
+  animation-delay: -3s;
+  animation-duration: 5s;
+}
+
+.shape-5 {
+  bottom: 20%;
+  right: 10%;
+  animation-delay: -4s;
+  animation-duration: 9s;
+}
+
+@keyframes float-random {
+  0%, 100% { 
+    transform: translateY(0) rotate(0deg) scale(1); 
+    opacity: 0.2;
+  }
+  25% { 
+    transform: translateY(-20px) rotate(90deg) scale(1.1); 
+    opacity: 0.1;
+  }
+  50% { 
+    transform: translateY(10px) rotate(180deg) scale(0.9); 
+    opacity: 0.3;
+  }
+  75% { 
+    transform: translateY(-10px) rotate(270deg) scale(1.2); 
+    opacity: 0.15;
+  }
+}
+
+/* Hero card enhancements */
+.card.fixed.block.hero-card {
+  position: relative;
+  background: linear-gradient(135deg, #fefefe 0%, #f0fdf4 100%);
+  border: 3px solid var(--main-color);
+  border-radius: 12px 18px 15px 10px / 8px 12px 10px 15px !important;
+  padding: 4rem 3rem !important;
+  margin: 3rem 0 5rem !important;
+}
+
+/* Override blocks.css pseudo-elements for hero card */
+.card.fixed.block.hero-card:before,
+.card.fixed.block.hero-card:after {
+  border-radius: 12px 18px 15px 10px / 8px 12px 10px 15px !important;
+}
+
+
+/* Give middle image in dinner section different tilt */
+.event-block img[src="/img/daniel-lightning-talk.jpeg"] {
+  transform: rotate(-2deg);
+}
+
+/* Text highlight */
+.highlight {
+  position: relative;
 }
