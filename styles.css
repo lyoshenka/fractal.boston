@@ -330,7 +330,7 @@ h3::after {
   right: 0;
   height: 3px;
   background: var(--main-color);
-  transform: scaleX(0.6) rotate(-0.8deg);
+  transform: scaleX(0.6) rotate(-0.5deg);
   transform-origin: left;
   opacity: 0.5;
 }
@@ -347,7 +347,7 @@ h4 {
   background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #f0fdf4 100%);
   border: 3px solid var(--main-color);
   border-radius: 20px 80px 20px 80px / 80px 20px 80px 20px;
-  margin-top: 4rem;
+  margin-top: 2rem;
   margin-bottom: 2rem;
   text-align: center;
   position: relative;
@@ -394,6 +394,15 @@ h4 {
 
 .stay-connected p {
   margin-bottom: 1rem;
+}
+
+.stay-connected .center {
+  margin-top: 2rem;
+}
+
+.stay-connected iframe {
+  border-radius: 1rem;
+  border: 2px solid var(--main-color);
 }
 
 .stay-connected a {
@@ -489,7 +498,12 @@ ul li::before {
 
 /* Shorter underlines for non-activity sections */
 h3:not(.activities-section h3)::after {
-  transform: scaleX(0.2) rotate(-0.8deg);
+  transform: scaleX(0.2) rotate(-0.5deg);
+}
+
+/* More tilt for activities section headings */
+.activities-section h3::after {
+  transform: scaleX(0.6) rotate(-1.2deg);
 }
 
 
@@ -571,9 +585,28 @@ h3:not(.activities-section h3)::after {
   position: relative;
   background: linear-gradient(135deg, #fefefe 0%, #f0fdf4 100%);
   border: 3px solid var(--main-color);
-  border-radius: 12px 18px 15px 10px / 8px 12px 10px 15px !important;
-  padding: 4rem 3rem !important;
-  margin: 3rem 0 5rem !important;
+  border-radius: 12px 18px 15px 10px / 8px 12px 10px 15px;
+  padding: 0;
+  margin: 3rem 0 5rem;
+}
+
+.hero-content {
+  padding: 2rem 3rem;
+}
+
+/* Reset margins on hero card elements */
+.hero-card h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+.hero-card p {
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+
+.hero-card .buttons {
+  margin-bottom: 0;
 }
 
 /* Override blocks.css pseudo-elements for hero card */
