@@ -1,3 +1,7 @@
+/* ==========================================
+   CSS VARIABLES & FOUNDATIONS
+   ========================================== */
+
 :root {
   --font-family: Optima, Candara, "Noto Sans", source-sans-pro, sans-serif;
   --fractul-font: "Fractul", var(--font-family);
@@ -13,6 +17,10 @@
   src: url("/font/Fractul-SemiBoldItalic.woff2") format("woff2");
 }
 
+/* ==========================================
+   GLOBAL RESET & BASE STYLES
+   ========================================== */
+
 *,
 *:before,
 *:after {
@@ -24,6 +32,7 @@
 html {
   font-size: 10px;
 }
+
 @media screen and (min-width: 92.5rem) {
   html {
     margin-left: calc(100vw - 100%);
@@ -43,6 +52,10 @@ body {
   font-size: 1.8rem;
 }
 
+/* ==========================================
+   LAYOUT STRUCTURE
+   ========================================== */
+
 main {
   width: 100%;
   max-width: 75rem;
@@ -53,10 +66,28 @@ main {
   gap: 2rem;
 }
 
+main > div {
+  position: relative;
+}
+
 header {
   text-align: center;
   position: relative;
   overflow: hidden;
+}
+
+.center {
+  text-align: center;
+  margin: 0 auto;
+}
+
+/* ==========================================
+   TYPOGRAPHY
+   ========================================== */
+
+p {
+  line-height: 1.7;
+  margin: 0 0 1.5rem 0;
 }
 
 h1 {
@@ -70,35 +101,178 @@ h1 {
   animation: wobble 8s ease-in-out infinite;
 }
 
-@keyframes wobble {
-  0%, 100% { transform: rotate(-1deg); }
-  25% { transform: rotate(1deg); }
-  50% { transform: rotate(-0.5deg); }
-  75% { transform: rotate(0.5deg); }
+h2 {
+  color: var(--main-color);
+  font-size: 3.6rem;
+  margin: 6rem 0 2rem;
+  text-align: center;
+  position: relative;
+  font-weight: bold;
 }
 
-@media screen and (max-width: 480px) {
-  .dot {
-    display: none;
-  }
+
+h3 {
+  color: var(--main-color);
+  font-size: 2.8rem;
+  margin: 4rem 0 2rem;
+  position: relative;
+  display: inline-block;
 }
 
-/* h2 {
-  color: var(--subtitle-color);
-  font-size: 2.4rem;
-  margin-bottom: 2rem;
-}  */
-
-.buttons {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+h3::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--main-color);
+  transform: scaleX(0.6) rotate(-0.5deg);
+  transform-origin: left;
+  opacity: 0.5;
 }
-@media screen and (min-width: 32.5rem) {
-  .buttons {
-    flex-direction: row;
-    gap: 1rem;
-  }
+
+h4 {
+  color: var(--main-color);
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  display: inline-block;
+  position: relative;
+}
+
+/* Typography overrides for specific sections */
+.activities-section h2::before,
+.activities-section h2::after,
+.hero-card h2::before,
+.hero-card h2::after {
+  display: none;
+}
+
+
+.activities-section h3:first-of-type {
+  margin-top: 2rem;
+}
+
+.activities-section h3::after {
+  transform: scaleX(0.6) rotate(-1.2deg);
+}
+
+h3:not(.activities-section h3)::after {
+  transform: scaleX(0.2) rotate(-0.5deg);
+}
+
+.stay-connected h3 {
+  color: var(--main-color);
+  margin-bottom: 1.5rem;
+  transform: none;
+}
+
+.stay-connected h3::after {
+  display: none;
+}
+
+/* ==========================================
+   MINIMAL BLOCK SYSTEM (replaces blocks.css)
+   ========================================== */
+
+.block {
+  display: block;
+  border: 3px solid var(--text-color);
+  border-radius: 3px;
+  padding: 4px 8px;
+  background: var(--bg-color);
+  font-weight: 700;
+  cursor: pointer;
+  box-sizing: border-box;
+  position: relative;
+  top: -2px;
+  left: -2px;
+  transition: transform 0.2s;
+  margin: 8px 6px 10px;
+  z-index: 1;
+  user-select: none;
+}
+
+.block::before {
+  content: "";
+  background: var(--bg-color);
+  border: 3px solid var(--text-color);
+  border-radius: 3px;
+  box-sizing: border-box;
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  height: calc(100% + 6px);
+  width: calc(100% + 6px);
+  z-index: -1;
+}
+
+.block::after {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  background: #444;
+  border: 3px solid var(--text-color);
+  border-radius: 3px;
+  height: calc(100% + 6px);
+  width: calc(100% + 6px);
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  right: 0;
+  z-index: -2;
+  transition: transform 0.2s;
+}
+
+.block:hover {
+  transform: translate(2px, 2px);
+}
+
+.block:hover::after {
+  transform: translate(-2px, -3px);
+}
+
+.block:focus {
+  outline: none;
+}
+
+.block.fixed {
+  cursor: auto;
+}
+
+.block.fixed,
+.block.fixed::before,
+.block.fixed::after {
+  transform: none !important;
+}
+
+.block.fixed:hover,
+.block.fixed:hover::before,
+.block.fixed:hover::after {
+  transform: none !important;
+}
+
+.block.accent {
+  color: var(--bg-color);
+  background: var(--main-color);
+}
+
+.block.accent::before {
+  background: var(--main-color);
+}
+
+/* ==========================================
+   LINKS & BUTTONS
+   ========================================== */
+
+a {
+  color: var(--main-color);
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+a:hover {
+  color: #047857;
 }
 
 .main-cta {
@@ -118,7 +292,7 @@ h1 {
   background: var(--main-color);
   color: white;
   border: 3px solid var(--main-color);
-  padding: 1.2rem 3rem;
+  padding: 1.5rem 4.5rem;
   font-size: 2rem;
   font-weight: bold;
   cursor: pointer;
@@ -128,36 +302,44 @@ h1 {
 }
 
 .main-cta button:hover {
-  background: white;
-  color: var(--main-color);
+  background: #047857;
+  color: white;
   box-shadow: 6px 6px 0 rgba(5, 150, 105, 0.4);
   border-radius: 15px 50px 15px 50px / 50px 15px 50px 15px;
 }
 
-svg {
-  fill: currentColor;
-}
-
-p {
-  line-height: 1.5;
-}
-
-ul {
+.buttons {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  justify-content: center;
+  align-items: center;
 }
 
-.center {
-  text-align: center;
-  margin: 0 auto;
+@media screen and (min-width: 32.5rem) {
+  .buttons {
+    flex-direction: row;
+    gap: 1rem;
+  }
 }
+
+.stay-connected a {
+  color: var(--main-color);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+/* ==========================================
+   CARDS & CONTENT BLOCKS
+   ========================================== */
 
 .card {
   background: #fefefe;
   border-radius: 23% 77% 69% 31% / 29% 67% 33% 71%;
   padding: 2.5rem;
-  margin: 2rem 0 4rem;
+  margin: 1.5rem 0 3rem;
   position: relative;
   box-shadow: 4px 4px 0 rgba(5, 150, 105, 0.15);
   transition: transform 0.3s ease;
@@ -171,20 +353,88 @@ ul {
   border-radius: 77% 23% 31% 69% / 67% 29% 71% 33%;
 }
 
-.card:nth-child(odd):hover {
-  transform: scale(1.01);
+
+/* ==========================================
+   HERO SECTION
+   ========================================== */
+
+.hero-section {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #f0fdf4 100%);
+  border: 3px solid var(--main-color);
+  border-radius: 80px 20px 80px 20px / 20px 80px 20px 80px;
+  margin: 3rem 0 1rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
 }
 
-.member-story {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  margin-left: 1rem;
-  margin-right: -1rem;
-  border: 1px dashed rgba(5, 150, 105, 0.3);
-  border-radius: 12px 25px 18px 30px;
-  background: #fefefe;
-  box-shadow: none;
+.hero-content {
+  padding: 4.5rem 3rem 4.5rem 3rem;
+}
+
+.hero-section p {
+  text-align: left;
+  font-weight: 600;
+}
+
+.hero-section h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+.hero-section .buttons {
+  margin-bottom: 0;
+}
+
+.hero-section::before {
+  content: "✦";
+  position: absolute;
+  top: 20px;
+  left: 30px;
+  font-size: 2rem;
+  color: var(--main-color);
+  opacity: 0.3;
+  animation: float 3s ease-in-out infinite;
+}
+
+.hero-section::after {
+  content: "◈";
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+  font-size: 2rem;
+  color: var(--main-color);
+  opacity: 0.3;
+  animation: float 3s ease-in-out infinite reverse;
+}
+
+.hero-card h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+.hero-card p {
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+
+.hero-card .buttons {
+  margin-bottom: 0;
+}
+
+
+.highlight {
+  position: relative;
+}
+
+/* ==========================================
+   ACTIVITIES SECTION
+   ========================================== */
+
+.activities-section {
+  margin: 3rem 0;
+  padding: 2rem 0;
+  position: relative;
 }
 
 .event-block {
@@ -210,45 +460,33 @@ ul {
   box-shadow: none;
 }
 
+.origin-block {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+/* ==========================================
+   MEMBER STORIES & TESTIMONIALS
+   ========================================== */
+
+.member-story {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-left: 1rem;
+  margin-right: -1rem;
+  border: 1px dashed rgba(5, 150, 105, 0.3);
+  border-radius: 12px 25px 18px 30px;
+  background: #fefefe;
+  box-shadow: none;
+}
+
 @media screen and (min-width: 768px) {
   .member-story {
     flex-direction: row;
     align-items: start;
   }
-}
-
-.member-photo {
-  width: 100%;
-  max-width: 200px;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-  background: #e5e7eb;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #9ca3af;
-  font-size: 1.4rem;
-  flex-shrink: 0;
-  border: 3px solid var(--main-color);
-  transform: rotate(-5deg);
-}
-
-.event-photo {
-  width: 100%;
-  max-width: 100%;
-  height: 300px;
-  border-radius: 20px 80px 30px 70px / 30% 20% 30% 20%;
-  transform: rotate(1deg);
-  margin-bottom: 1.5rem;
-  object-fit: cover;
-  background: #e5e7eb;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #9ca3af;
-  font-size: 1.4rem;
-  border: 3px solid var(--main-color);
 }
 
 .story-content,
@@ -288,66 +526,61 @@ blockquote::before {
   font-style: italic;
 }
 
-h2 {
-  color: var(--main-color);
-  font-size: 3.6rem;
-  margin: 6rem 0 2rem;
-  text-align: center;
-  position: relative;
-  font-weight: bold;
+/* ==========================================
+   IMAGES & MEDIA
+   ========================================== */
+
+.member-photo {
+  width: 100%;
+  max-width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  background: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  border: 3px solid var(--main-color);
+  transform: rotate(-5deg);
 }
 
-h2::before,
-h2::after {
-  content: "◈";
-  position: absolute;
-  color: var(--main-color);
-  opacity: 0.3;
-  font-size: 2rem;
+.event-photo {
+  width: 100%;
+  max-width: 100%;
+  height: 300px;
+  border-radius: 20px 80px 30px 70px / 30% 20% 30% 20%;
+  transform: rotate(1deg);
+  margin-bottom: 1.5rem;
+  object-fit: cover;
+  background: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  font-size: 1.4rem;
+  border: 3px solid var(--main-color);
 }
 
-h2::before {
-  left: -3rem;
+.event-block img[src="/img/daniel-lightning-talk.jpeg"] {
+  transform: rotate(-2deg);
 }
 
-h2::after {
-  right: -3rem;
+svg {
+  fill: currentColor;
 }
 
-h3 {
-  color: var(--main-color);
-  font-size: 2.8rem;
-  margin: 4rem 0 2rem;
-  position: relative;
-  display: inline-block;
-}
-
-h3::after {
-  content: "";
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--main-color);
-  transform: scaleX(0.6) rotate(-0.5deg);
-  transform-origin: left;
-  opacity: 0.5;
-}
-
-h4 {
-  color: var(--main-color);
-  font-size: 2.2rem;
-  margin-bottom: 1rem;
-  display: inline-block;
-  position: relative;
-}
+/* ==========================================
+   STAY CONNECTED SECTION
+   ========================================== */
 
 .stay-connected {
   background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #f0fdf4 100%);
   border: 3px solid var(--main-color);
   border-radius: 20px 80px 20px 80px / 80px 20px 80px 20px;
-  margin-top: 2rem;
+  margin-top: 4rem;
   margin-bottom: 2rem;
   text-align: center;
   position: relative;
@@ -377,21 +610,6 @@ h4 {
   animation: float 3s ease-in-out infinite reverse;
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-10px) rotate(180deg); }
-}
-
-.stay-connected h3 {
-  color: var(--main-color);
-  margin-bottom: 1.5rem;
-  transform: none;
-}
-
-.stay-connected h3::after {
-  display: none;
-}
-
 .stay-connected p {
   margin-bottom: 1rem;
 }
@@ -403,62 +621,17 @@ h4 {
 .stay-connected iframe {
   border-radius: 1rem;
   border: 2px solid var(--main-color);
+  margin-bottom: 2rem;
 }
 
-.stay-connected a {
-  color: var(--main-color);
-  font-weight: 600;
-  text-decoration: underline;
-  text-decoration-style: wavy;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 3px;
-}
+/* ==========================================
+   LISTS & NAVIGATION
+   ========================================== */
 
-.fixed.block {
-  border-radius: 15px 85px 30px 70px / 70% 30% 70% 30%;
-  background: linear-gradient(135deg, #fefefe 0%, #f0fdf4 100%);
-  border: 2px solid var(--main-color);
-  margin-bottom: 3rem;
-}
-
-.fixed.block:hover {
-  transform: scale(1.01);
-}
-
-main > div {
-  position: relative;
-}
-
-p {
-  line-height: 1.7;
-}
-
-.decorative-element {
-  font-size: 3rem;
-  color: var(--main-color);
-  opacity: 0.3;
-  position: absolute;
-  animation: spin 20s linear infinite;
-}
-
-header .decorative-element {
-  top: 20px;
-  right: 10%;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-a {
-  color: var(--main-color);
-  transition: all 0.2s ease;
-  position: relative;
-}
-
-a:hover {
-  color: #047857;
+ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 
 ul li {
@@ -474,40 +647,23 @@ ul li::before {
   opacity: 0.6;
 }
 
-.activities-section {
-  margin: 3rem 0;
-  padding: 2rem 0;
-  position: relative;
+/* ==========================================
+   DECORATIVE ELEMENTS & ANIMATIONS
+   ========================================== */
+
+.decorative-element {
+  font-size: 3rem;
+  color: var(--main-color);
+  opacity: 0.3;
+  position: absolute;
+  animation: spin 20s linear infinite;
 }
 
-.activities-section h3:first-of-type {
-  margin-top: 2rem;
+header .decorative-element {
+  top: 20px;
+  right: 10%;
 }
 
-/* Remove diamonds from "Things We Do Together" heading */
-.activities-section h2::before,
-.activities-section h2::after {
-  display: none;
-}
-
-/* Remove diamonds from hero card heading */
-.hero-card h2::before,
-.hero-card h2::after {
-  display: none;
-}
-
-/* Shorter underlines for non-activity sections */
-h3:not(.activities-section h3)::after {
-  transform: scaleX(0.2) rotate(-0.5deg);
-}
-
-/* More tilt for activities section headings */
-.activities-section h3::after {
-  transform: scaleX(0.6) rotate(-1.2deg);
-}
-
-
-/* Floating shapes around header */
 .floating-shapes {
   position: absolute;
   top: 0;
@@ -561,6 +717,49 @@ h3:not(.activities-section h3)::after {
   animation-duration: 9s;
 }
 
+/* ==========================================
+   RESPONSIVE DESIGN
+   ========================================== */
+
+@media screen and (max-width: 650px) {
+  .stay-connected {
+    border-radius: 12px !important;
+    padding-top: 1rem;
+  }
+  
+  .stay-connected::before,
+  .stay-connected::after {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .dot {
+    display: none;
+  }
+}
+
+/* ==========================================
+   KEYFRAME ANIMATIONS
+   ========================================== */
+
+@keyframes wobble {
+  0%, 100% { transform: rotate(-1deg); }
+  25% { transform: rotate(1deg); }
+  50% { transform: rotate(-0.5deg); }
+  75% { transform: rotate(0.5deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(180deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 @keyframes float-random {
   0%, 100% { 
     transform: translateY(0) rotate(0deg) scale(1); 
@@ -578,50 +777,4 @@ h3:not(.activities-section h3)::after {
     transform: translateY(-10px) rotate(270deg) scale(1.2); 
     opacity: 0.15;
   }
-}
-
-/* Hero card enhancements */
-.card.fixed.block.hero-card {
-  position: relative;
-  background: linear-gradient(135deg, #fefefe 0%, #f0fdf4 100%);
-  border: 3px solid var(--main-color);
-  border-radius: 12px 18px 15px 10px / 8px 12px 10px 15px;
-  padding: 0;
-  margin: 3rem 0 5rem;
-}
-
-.hero-content {
-  padding: 2rem 3rem;
-}
-
-/* Reset margins on hero card elements */
-.hero-card h2 {
-  margin-top: 0;
-  margin-bottom: 1.5rem;
-}
-
-.hero-card p {
-  margin-top: 0;
-  margin-bottom: 2rem;
-}
-
-.hero-card .buttons {
-  margin-bottom: 0;
-}
-
-/* Override blocks.css pseudo-elements for hero card */
-.card.fixed.block.hero-card:before,
-.card.fixed.block.hero-card:after {
-  border-radius: 12px 18px 15px 10px / 8px 12px 10px 15px !important;
-}
-
-
-/* Give middle image in dinner section different tilt */
-.event-block img[src="/img/daniel-lightning-talk.jpeg"] {
-  transform: rotate(-2deg);
-}
-
-/* Text highlight */
-.highlight {
-  position: relative;
 }
