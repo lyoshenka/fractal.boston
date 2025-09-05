@@ -723,7 +723,6 @@ header .decorative-element {
 
 @media screen and (max-width: 650px) {
   .stay-connected {
-    border-radius: 12px !important;
     padding-top: 1rem;
   }
   
