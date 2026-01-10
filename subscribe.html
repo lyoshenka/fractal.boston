@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Subscribe - Fractal Boston</title>
+    <meta
+      name="description"
+      content="Join the Fractal Boston community"
+    />
+    <meta name="keywords" content="fractal, boston, community, subscribe" />
+
+    <link rel="shortcut icon" href="/img/logo-square.png" />
+    <link rel="stylesheet" href="/normalize.css" />
+    <link rel="stylesheet" href="/styles.css" />
+
+    <!-- Email Spell Checker library -->
+    <script type="module">
+      import emailSpellChecker from 'https://cdn.jsdelivr.net/npm/@zootools/email-spell-checker@1.12.0/+esm';
+      window.emailSpellChecker = emailSpellChecker;
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-523DXHRFKR"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-523DXHRFKR");
+    </script>
+
+    <style>
+      .subscribe-form {
+        background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #f0fdf4 100%);
+        border: 3px solid var(--main-color);
+        border-radius: 80px 20px 80px 20px / 20px 80px 20px 80px;
+        margin: 3rem 0 1rem;
+        padding: 4.5rem 3rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .subscribe-form::before {
+        content: "✦";
+        position: absolute;
+        top: 20px;
+        left: 30px;
+        font-size: 2rem;
+        color: var(--main-color);
+        opacity: 0.3;
+        animation: float 3s ease-in-out infinite;
+      }
+
+      .subscribe-form::after {
+        content: "◈";
+        position: absolute;
+        bottom: 20px;
+        right: 30px;
+        font-size: 2rem;
+        color: var(--main-color);
+        opacity: 0.3;
+        animation: float 3s ease-in-out infinite reverse;
+      }
+
+      .subscribe-form h2 {
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        color: var(--main-color);
+        text-align: center;
+      }
+
+      .subscribe-form p {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .form-group {
+        margin-bottom: 2rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: var(--text-color);
+      }
+
+      .form-group input[type="text"],
+      .form-group input[type="email"] {
+        width: 100%;
+        padding: 1.2rem;
+        font-size: 1.6rem;
+        border: 3px solid var(--main-color);
+        border-radius: 12px;
+        background: white;
+        font-family: var(--font-family);
+        box-sizing: border-box;
+        transition: all 0.2s ease;
+      }
+
+      .form-group input[type="text"]:focus,
+      .form-group input[type="email"]:focus {
+        outline: none;
+        border-color: #047857;
+        box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+      }
+
+      .email-suggestion {
+        font-size: 1.4rem;
+        color: var(--main-color);
+        margin-top: 0.5rem;
+        font-style: italic;
+      }
+
+      .email-suggestion a {
+        cursor: pointer;
+        text-decoration: underline;
+      }
+
+      .checkbox-group {
+        margin-bottom: 3rem;
+      }
+
+      .checkbox-item {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 1.5rem;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 12px;
+        transition: background 0.2s ease;
+      }
+
+      .checkbox-item:hover {
+        background: rgba(255, 255, 255, 0.9);
+      }
+
+      .checkbox-item input[type="checkbox"] {
+        width: 24px;
+        height: 24px;
+        margin-right: 1rem;
+        margin-top: 0.2rem;
+        cursor: pointer;
+        flex-shrink: 0;
+        accent-color: var(--main-color);
+      }
+
+      .checkbox-item label {
+        cursor: pointer;
+        font-size: 1.6rem;
+        line-height: 1.5;
+        flex: 1;
+      }
+
+      .submit-button-container {
+        text-align: center;
+        margin-top: 2rem;
+      }
+
+      .submit-cta {
+        font-size: 2.4rem;
+        text-decoration: none;
+        display: inline-block;
+        transform: rotate(-0.5deg);
+        transition: transform 0.2s ease;
+      }
+
+      .submit-cta:hover {
+        transform: rotate(0deg) scale(1.05);
+      }
+
+      .submit-cta button {
+        border-radius: 50px 15px 50px 15px / 15px 50px 15px 50px;
+        background: var(--main-color);
+        color: white;
+        border: 3px solid var(--main-color);
+        padding: 1.5rem 4.5rem;
+        font-size: 2rem;
+        font-weight: bold;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.3s ease;
+        box-shadow: 4px 4px 0 rgba(5, 150, 105, 0.3);
+      }
+
+      .submit-cta button:hover {
+        background: #047857;
+        color: white;
+        box-shadow: 6px 6px 0 rgba(5, 150, 105, 0.4);
+        border-radius: 15px 50px 15px 50px / 50px 15px 50px 15px;
+      }
+
+      .submit-cta button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Fractal Boston</h1>
+        <div class="decorative-element" aria-hidden="true">✧</div>
+        <div class="floating-shapes" aria-hidden="true">
+          <span class="shape shape-1">◈</span>
+          <span class="shape shape-2">✦</span>
+          <span class="shape shape-3">◆</span>
+          <span class="shape shape-4">◯</span>
+          <span class="shape shape-5">✧</span>
+        </div>
+      </header>
+
+      <div class="subscribe-form">
+        <h2>Join the crew</h2>
+        <p>Stay connected with Fractal Boston</p>
+
+        <form id="subscribeForm">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" required />
+            <div id="emailSuggestion" class="email-suggestion"></div>
+          </div>
+
+          <div class="checkbox-group">
+            <div class="checkbox-item">
+              <input type="checkbox" id="newsletter" name="newsletter" checked />
+              <label for="newsletter">Subscribe to the newsletter for updates (~1 per month)</label>
+            </div>
+
+            <div class="checkbox-item">
+              <input type="checkbox" id="events" name="events" checked />
+              <label for="events">Email me about upcoming events (~1 per week)</label>
+            </div>
+
+            <div class="checkbox-item">
+              <input type="checkbox" id="discord" name="discord" checked />
+              <label for="discord">Add me to the Discord group chat</label>
+            </div>
+          </div>
+
+          <div class="submit-button-container">
+            <div class="submit-cta">
+              <button type="submit">✨ Join the crew ✨</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <script type="module">
+      import emailSpellChecker from 'https://cdn.jsdelivr.net/npm/@zootools/email-spell-checker@1.12.0/+esm';
+
+      // Email spell checker integration for email suggestions
+      const emailInput = document.getElementById('email');
+      const emailSuggestion = document.getElementById('emailSuggestion');
+
+      emailInput.addEventListener('blur', function() {
+        const suggestion = emailSpellChecker.run({
+          email: emailInput.value
+        });
+
+        if (suggestion) {
+          emailSuggestion.innerHTML = 'Did you mean <a onclick="useSuggestion(\'' + suggestion.full + '\')">' + suggestion.full + '</a>?';
+        } else {
+          emailSuggestion.innerHTML = '';
+        }
+      });
+
+      window.useSuggestion = function(suggestedEmail) {
+        emailInput.value = suggestedEmail;
+        emailSuggestion.innerHTML = '';
+      };
+
+      // Form submission handler (needs to be in module scope)
+      document.getElementById('subscribeForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const formData = {
+          name: document.getElementById('name').value,
+          email: document.getElementById('email').value,
+          newsletter: document.getElementById('newsletter').checked,
+          events: document.getElementById('events').checked,
+          discord: document.getElementById('discord').checked
+        };
+
+        console.log('Form submitted with data:', formData);
+        console.log('Checked options:');
+        if (formData.newsletter) console.log('  - Newsletter subscription');
+        if (formData.events) console.log('  - Event notifications');
+        if (formData.discord) console.log('  - Discord group chat');
+
+        // Track form submission in Google Analytics
+        gtag("event", "form_submit", {
+          event_category: "engagement",
+          event_label: "Subscribe Form Submission",
+        });
+
+        // You can add actual form submission logic here
+        // For example, sending to a backend API:
+        // fetch('/api/subscribe', {
+        //   method: 'POST',
+        //   headers: { 'Content-Type': 'application/json' },
+        //   body: JSON.stringify(formData)
+        // });
+
+        alert('Thanks for joining! (Check the console for form data)');
+      });
+    </script>
+  </body>
+</html>
