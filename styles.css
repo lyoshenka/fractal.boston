@@ -153,16 +153,16 @@ h4 {
   margin-top: 2rem;
 }
 
+h3::after {
+  transform: scaleX(0.2) rotate(-0.5deg);
+}
+
 .activities-section h3::after {
   transform: scaleX(0.6) rotate(-1.2deg);
 }
 
 .luma-calendar h3::after {
   transform: scaleX(0.6) rotate(-0.8deg);
-}
-
-h3:not(.activities-section h3)::after {
-  transform: scaleX(0.2) rotate(-0.5deg);
 }
 
 .stay-connected h3 {
