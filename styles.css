@@ -453,6 +453,11 @@ a:hover {
   border-radius: 18px 35px 22px 28px / 32% 25% 40% 35%;
 }
 
+.luma-calendar {
+  background: linear-gradient(285deg, #fefefe 0%, #f0fdf4 100%);
+  border-radius: 22px 30px 18px 35px / 28% 35% 32% 25%;
+}
+
 .coworking-block {
   border: none;
   border-radius: 35% 15% 25% 45% / 20% 50% 30% 40%;
