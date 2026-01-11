@@ -49,10 +49,11 @@
       </header>
 
       <div class="subscribe-form">
-        <h2>Join the crew</h2>
-        <p>Stay connected with Fractal Boston</p>
+        <div id="formContainer">
+          <h2>Join the crew</h2>
+          <p>Stay connected with Fractal Boston</p>
 
-        <form id="subscribeForm">
+          <form id="subscribeForm">
           <div class="form-group">
             <label for="email">Email Address</label>
             <input type="email" id="email" name="email" required />
@@ -77,6 +78,7 @@
             </div>
           </div>
         </form>
+        </div>
 
         <div id="confirmationMessage" class="confirmation-message" style="display: none;">
           <h3>Welcome to the crew! 🎉</h3>
@@ -146,9 +148,15 @@
         //   body: JSON.stringify(formData)
         // });
 
-        // Hide form and show confirmation message
-        document.getElementById('subscribeForm').style.display = 'none';
-        document.getElementById('confirmationMessage').style.display = 'block';
+        // Fade out form container and show confirmation message
+        const formContainer = document.getElementById('formContainer');
+        formContainer.style.opacity = '0';
+        formContainer.style.transition = 'opacity 0.3s ease-out';
+
+        setTimeout(() => {
+          formContainer.style.display = 'none';
+          document.getElementById('confirmationMessage').style.display = 'block';
+        }, 300);
       });
     </script>
   </body>
