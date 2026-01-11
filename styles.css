@@ -919,6 +919,38 @@ header .decorative-element {
   cursor: not-allowed;
 }
 
+.confirmation-message {
+  text-align: center;
+  animation: fadeIn 0.5s ease-in;
+}
+
+.confirmation-message h3 {
+  color: var(--main-color);
+  font-size: 2.8rem;
+  margin: 0 0 1.5rem;
+}
+
+.confirmation-message h3::after {
+  display: none;
+}
+
+.confirmation-message p {
+  font-size: 1.8rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* ==========================================
    KEYFRAME ANIMATIONS
    ========================================== */
