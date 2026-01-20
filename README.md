@@ -14,6 +14,10 @@ npx serve .
 
 Visit http://localhost:8000
 
+## Deployment
+
+The site is deployed on GitHub Pages at https://fractal.boston
+
 ## Structure
 
 - `index.html` - Main landing page
