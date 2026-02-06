@@ -522,7 +522,7 @@ blockquote {
 }
 
 blockquote::before {
-  content: """;
+  content: "";
   position: absolute;
   top: -10px;
   left: 10px;
@@ -938,6 +938,15 @@ header .decorative-element {
   font-size: 1.8rem;
   line-height: 1.7;
   margin-bottom: 1.5rem;
+}
+
+.unsubscribe-page .unsubscribe-state h2 {
+  margin-top: 0;
+}
+
+.unsubscribe-error {
+  color: #b91c1c;
+  font-weight: 500;
 }
 
 @keyframes fadeIn {
