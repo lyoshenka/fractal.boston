@@ -53,7 +53,7 @@
           <h2>Join the crew</h2>
           <p>Stay connected with Fractal Boston</p>
 
-          <form id="subscribeForm">
+          <form id="subscribeForm" action="javascript:void(0);" method="post" novalidate>
           <div class="form-group">
             <label for="email">Email Address</label>
             <input type="email" id="email" name="email" required />
@@ -81,16 +81,10 @@
         </div>
 
         <div id="confirmationMessage" class="confirmation-message" style="display: none;">
-          <h3>Welcome to the crew! 🎉</h3>
-          <p>Thanks for joining! We're excited to have you.</p>
-          <p>Want to connect with the community right away? Hop into our Discord and introduce yourself!</p>
-          <div class="submit-button-container">
-            <div class="submit-cta">
-              <a href="https://fractal.boston/discord" target="_blank">
-                <button type="button">Join our Discord</button>
-              </a>
-            </div>
-          </div>
+          <h3>Check your email! 📧</h3>
+          <p>Let's make sure our emails can reach you.</p>
+          <p>Please check your email and click the verification link.</p>
+          <p><a href="/">Back to Fractal Boston</a></p>
         </div>
       </div>
     </main>
@@ -98,66 +92,123 @@
     <script type="module">
       import emailSpellChecker from 'https://cdn.jsdelivr.net/npm/@zootools/email-spell-checker@1.12.0/+esm';
 
-      // Email spell checker integration for email suggestions
+      // Wait for DOM to be ready
+      const form = document.getElementById('subscribeForm');
       const emailInput = document.getElementById('email');
       const emailSuggestion = document.getElementById('emailSuggestion');
 
-      emailInput.addEventListener('blur', function() {
-        const suggestion = emailSpellChecker.run({
-          email: emailInput.value
+      if (form && emailInput) {
+        console.log('Form handler initialized');
+
+        // Email spell checker integration for email suggestions
+        emailInput.addEventListener('blur', function() {
+          const suggestion = emailSpellChecker.run({
+            email: emailInput.value
+          });
+
+          if (suggestion) {
+            emailSuggestion.innerHTML = 'Did you mean <a onclick="useSuggestion(\'' + suggestion.full + '\')">' + suggestion.full + '</a>?';
+          } else {
+            emailSuggestion.innerHTML = '';
+          }
         });
 
-        if (suggestion) {
-          emailSuggestion.innerHTML = 'Did you mean <a onclick="useSuggestion(\'' + suggestion.full + '\')">' + suggestion.full + '</a>?';
-        } else {
+        window.useSuggestion = function(suggestedEmail) {
+          emailInput.value = suggestedEmail;
           emailSuggestion.innerHTML = '';
-        }
-      });
-
-      window.useSuggestion = function(suggestedEmail) {
-        emailInput.value = suggestedEmail;
-        emailSuggestion.innerHTML = '';
-      };
-
-      // Form submission handler (needs to be in module scope)
-      document.getElementById('subscribeForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        const formData = {
-          email: document.getElementById('email').value,
-          newsletter: document.getElementById('newsletter').checked,
-          events: document.getElementById('events').checked
         };
 
-        console.log('Form submitted with data:', formData);
-        console.log('Checked options:');
-        if (formData.newsletter) console.log('  - Newsletter subscription');
-        if (formData.events) console.log('  - Event notifications');
+        // Form submission handler
+        form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        console.log('Form submit handler triggered');
+
+        const emailInput = document.getElementById('email');
+        const submitButton = document.querySelector('button[type="submit"]');
+        const formContainer = document.getElementById('formContainer');
+        const confirmationMessage = document.getElementById('confirmationMessage');
+        
+        const email = emailInput.value.trim();
+        const newsletter = document.getElementById('newsletter').checked;
+        const events = document.getElementById('events').checked;
+
+        console.log('Submitting with email:', email);
+
+        // Disable submit button during request
+        submitButton.disabled = true;
+        submitButton.textContent = 'Subscribing...';
 
         // Track form submission in Google Analytics
-        gtag("event", "form_submit", {
-          event_category: "engagement",
-          event_label: "Subscribe Form Submission",
+        if (typeof gtag !== 'undefined') {
+          gtag("event", "form_submit", {
+            event_category: "engagement",
+            event_label: "Subscribe Form Submission",
+          });
+        }
+
+        // Determine API URL based on environment
+        const isLocalhost = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+        const API_URL = isLocalhost 
+          ? "http://localhost:3000/api/subscribe"
+          : "https://fractal-boston-events.vercel.app/api/subscribe";
+
+        console.log('Calling API:', API_URL);
+
+        try {
+          const response = await fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+          });
+
+          console.log('Response status:', response.status);
+
+          const data = await response.json();
+
+          if (!response.ok || !data.success) {
+            throw new Error(data.error || 'Failed to subscribe');
+          }
+
+          // Success - fade out form container and show confirmation message
+          formContainer.style.opacity = '0';
+          formContainer.style.transition = 'opacity 0.3s ease-out';
+
+          setTimeout(() => {
+            formContainer.style.display = 'none';
+            confirmationMessage.style.display = 'block';
+          }, 300);
+        } catch (error) {
+          // Error handling - show error message
+          console.error('Subscription error:', error);
+          submitButton.disabled = false;
+          submitButton.textContent = '✨ Join the crew ✨';
+          
+          // Show error message to user
+          const errorMessage = document.createElement('div');
+          errorMessage.className = 'error-message';
+          errorMessage.style.color = '#ff4444';
+          errorMessage.style.marginTop = '1rem';
+          errorMessage.textContent = 'Failed to subscribe. Please try again later.';
+          
+          // Remove any existing error message
+          const existingError = formContainer.querySelector('.error-message');
+          if (existingError) {
+            existingError.remove();
+          }
+          
+          formContainer.appendChild(errorMessage);
+          
+          // Remove error message after 5 seconds
+          setTimeout(() => {
+            errorMessage.remove();
+          }, 5000);
+        }
         });
-
-        // You can add actual form submission logic here
-        // For example, sending to a backend API:
-        // fetch('/api/subscribe', {
-        //   method: 'POST',
-        //   headers: { 'Content-Type': 'application/json' },
-        //   body: JSON.stringify(formData)
-        // });
-
-        // Fade out form container and show confirmation message
-        const formContainer = document.getElementById('formContainer');
-        formContainer.style.opacity = '0';
-        formContainer.style.transition = 'opacity 0.3s ease-out';
-
-        setTimeout(() => {
-          formContainer.style.display = 'none';
-          document.getElementById('confirmationMessage').style.display = 'block';
-        }, 300);
-      });
+      } else {
+        console.error('Form elements not found');
+      }
     </script>
   </body>
 </html>
