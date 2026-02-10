@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Unsubscribe - Fractal Boston</title>
+    <meta
+      name="description"
+      content="Unsubscribe from Fractal Boston event emails"
+    />
+    <meta name="keywords" content="fractal, boston, community, unsubscribe" />
+
+    <link rel="shortcut icon" href="/img/logo-square.png" />
+    <link rel="stylesheet" href="/normalize.css" />
+    <link rel="stylesheet" href="/styles.css" />
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-523DXHRFKR"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-523DXHRFKR");
+    </script>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1><a href="/">Fractal Boston</a></h1>
+        <div class="decorative-element" aria-hidden="true">✧</div>
+        <div class="floating-shapes" aria-hidden="true">
+          <span class="shape shape-1">◈</span>
+          <span class="shape shape-2">✦</span>
+          <span class="shape shape-3">◆</span>
+          <span class="shape shape-4">◯</span>
+          <span class="shape shape-5">✧</span>
+        </div>
+      </header>
+
+      <div class="subscribe-form unsubscribe-page">
+        <div id="confirmState" class="unsubscribe-state">
+          <h2>Unsubscribe from the events emails</h2>
+          <p>You will no longer receive Fractal Boston event emails. You can re-subscribe anytime from our website.</p>
+          <div class="submit-button-container">
+            <div class="submit-cta">
+              <button type="button" id="confirmBtn">Confirm unsubscribe</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="loadingState" class="unsubscribe-state" style="display: none;">
+          <p>Unsubscribing…</p>
+        </div>
+
+        <div id="successState" class="unsubscribe-state confirmation-message" style="display: none;">
+          <h3>You’re unsubscribed</h3>
+          <p id="successMessage"></p>
+          <p><a href="/">Back to Fractal Boston</a></p>
+        </div>
+
+        <div id="errorState" class="unsubscribe-state" style="display: none;">
+          <h3>Something went wrong</h3>
+          <p id="errorMessage" class="unsubscribe-error"></p>
+          <p>Need help? <a href="https://fractal.boston/discord" target="_blank" rel="noopener noreferrer">Reach out on Discord</a></p>
+          <p><a href="/">Back to Fractal Boston</a></p>
+        </div>
+
+        <div id="invalidState" class="unsubscribe-state" style="display: none;">
+          <h3>Invalid token</h3>
+          <p>This user token is missing or invalid. If you’re having trouble, <a href="https://fractal.boston/discord" target="_blank" rel="noopener noreferrer">reach out on Discord</a>.</p>
+          <p><a href="/">Back to Fractal Boston</a></p>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      (function () {
+        // Use localhost API when running locally, otherwise use production
+        const isLocalhost = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+        const API_URL = isLocalhost 
+          ? "http://localhost:3000/api/unsubscribe"
+          : "https://fractal-boston-events.vercel.app/api/unsubscribe";
+
+        const params = new URLSearchParams(window.location.search);
+        const token = params.get("token");
+
+        const confirmState = document.getElementById("confirmState");
+        const loadingState = document.getElementById("loadingState");
+        const successState = document.getElementById("successState");
+        const errorState = document.getElementById("errorState");
+        const invalidState = document.getElementById("invalidState");
+        const confirmBtn = document.getElementById("confirmBtn");
+        const successMessage = document.getElementById("successMessage");
+        const errorMessage = document.getElementById("errorMessage");
+
+        function show(state) {
+          [confirmState, loadingState, successState, errorState, invalidState].forEach(function (el) {
+            el.style.display = "none";
+          });
+          if (state) state.style.display = "block";
+        }
+
+        if (!token || token.trim() === "") {
+          show(invalidState);
+          return;
+        }
+
+        confirmBtn.addEventListener("click", function () {
+          show(loadingState);
+          confirmBtn.disabled = true;
+
+          fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ token: token }),
+          })
+            .then(function (res) {
+              return res.json().then(function (data) {
+                return { res: res, data: data };
+              });
+            })
+            .then(function (_ref) {
+              var res = _ref.res;
+              var data = _ref.data;
+              if (data.success === true && data.data && data.data.message) {
+                successMessage.textContent = data.data.message;
+                show(successState);
+              } else if (data.success === false && data.error) {
+                errorMessage.textContent = data.error;
+                show(errorState);
+              } else if (!res.ok) {
+                errorMessage.textContent = (data && data.error) || "Unsubscribe failed.";
+                show(errorState);
+              } else {
+                errorMessage.textContent = "An unexpected response was received.";
+                show(errorState);
+              }
+            })
+            .catch(function (err) {
+              errorMessage.textContent = err.message || "Could not complete unsubscribe. Please try again later.";
+              show(errorState);
+            })
+            .finally(function () {
+              confirmBtn.disabled = false;
+            });
+        });
+      })();
+    </script>
+  </body>
+</html>

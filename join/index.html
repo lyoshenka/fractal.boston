@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Subscribe - Fractal Boston</title>
+    <meta
+      name="description"
+      content="Join the Fractal Boston community"
+    />
+    <meta name="keywords" content="fractal, boston, community, subscribe" />
+
+    <link rel="shortcut icon" href="/img/logo-square.png" />
+    <link rel="stylesheet" href="/normalize.css" />
+    <link rel="stylesheet" href="/styles.css" />
+
+    <!-- Email Spell Checker library -->
+    <script type="module">
+      import emailSpellChecker from 'https://cdn.jsdelivr.net/npm/@zootools/email-spell-checker@1.12.0/+esm';
+      window.emailSpellChecker = emailSpellChecker;
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-523DXHRFKR"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-523DXHRFKR");
+    </script>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1><a href="/">Fractal Boston</a></h1>
+        <div class="decorative-element" aria-hidden="true">✧</div>
+        <div class="floating-shapes" aria-hidden="true">
+          <span class="shape shape-1">◈</span>
+          <span class="shape shape-2">✦</span>
+          <span class="shape shape-3">◆</span>
+          <span class="shape shape-4">◯</span>
+          <span class="shape shape-5">✧</span>
+        </div>
+      </header>
+
+      <div class="subscribe-form">
+        <div id="formContainer">
+          <h2>Join the crew</h2>
+          <p>Stay connected with Fractal Boston</p>
+
+          <form id="subscribeForm" action="javascript:void(0);" method="post" novalidate>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" required />
+            <div id="emailSuggestion" class="email-suggestion"></div>
+          </div>
+
+          <div class="submit-button-container">
+            <div class="submit-cta">
+              <button type="submit">✨ Join the crew ✨</button>
+            </div>
+          </div>
+        </form>
+        </div>
+
+        <div id="confirmationMessage" class="confirmation-message" style="display: none;">
+          <h3>Check your email! 📧</h3>
+          <p>Let's make sure our emails can reach you.</p>
+          <p>Please check your email and click the verification link.</p>
+          <p><a href="/">Back to Fractal Boston</a></p>
+        </div>
+      </div>
+    </main>
+
+    <script type="module">
+      import emailSpellChecker from 'https://cdn.jsdelivr.net/npm/@zootools/email-spell-checker@1.12.0/+esm';
+
+      // Wait for DOM to be ready
+      const form = document.getElementById('subscribeForm');
+      const emailInput = document.getElementById('email');
+      const emailSuggestion = document.getElementById('emailSuggestion');
+
+      if (form && emailInput) {
+        console.log('Form handler initialized');
+
+        // Email spell checker integration for email suggestions
+        emailInput.addEventListener('blur', function() {
+          const suggestion = emailSpellChecker.run({
+            email: emailInput.value
+          });
+
+          if (suggestion) {
+            emailSuggestion.innerHTML = 'Did you mean <a onclick="useSuggestion(\'' + suggestion.full + '\')">' + suggestion.full + '</a>?';
+          } else {
+            emailSuggestion.innerHTML = '';
+          }
+        });
+
+        window.useSuggestion = function(suggestedEmail) {
+          emailInput.value = suggestedEmail;
+          emailSuggestion.innerHTML = '';
+        };
+
+        // Form submission handler
+        form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        console.log('Form submit handler triggered');
+
+        const emailInput = document.getElementById('email');
+        const submitButton = document.querySelector('button[type="submit"]');
+        const formContainer = document.getElementById('formContainer');
+        const confirmationMessage = document.getElementById('confirmationMessage');
+        
+        const email = emailInput.value.trim();
+
+        console.log('Submitting with email:', email);
+
+        // Disable submit button during request
+        submitButton.disabled = true;
+        submitButton.textContent = 'Subscribing...';
+
+        // Track form submission in Google Analytics
+        if (typeof gtag !== 'undefined') {
+          gtag("event", "form_submit", {
+            event_category: "engagement",
+            event_label: "Subscribe Form Submission",
+          });
+        }
+
+        // Determine API URL based on environment
+        const isLocalhost = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+        const API_URL = isLocalhost 
+          ? "http://localhost:3000/api/subscribe"
+          : "https://fractal-boston-events.vercel.app/api/subscribe";
+
+        console.log('Calling API:', API_URL);
+
+        try {
+          const response = await fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+          });
+
+          console.log('Response status:', response.status);
+
+          const data = await response.json();
+
+          if (!response.ok || !data.success) {
+            throw new Error(data.error || 'Failed to subscribe');
+          }
+
+          // Success - fade out form container and show confirmation message
+          formContainer.style.opacity = '0';
+          formContainer.style.transition = 'opacity 0.3s ease-out';
+
+          setTimeout(() => {
+            formContainer.style.display = 'none';
+            confirmationMessage.style.display = 'block';
+          }, 300);
+        } catch (error) {
+          // Error handling - show error message
+          console.error('Subscription error:', error);
+          submitButton.disabled = false;
+          submitButton.textContent = '✨ Join the crew ✨';
+          
+          // Show error message to user
+          const errorMessage = document.createElement('div');
+          errorMessage.className = 'error-message';
+          errorMessage.style.color = '#ff4444';
+          errorMessage.style.marginTop = '1rem';
+          errorMessage.textContent = 'Failed to subscribe. Please try again later.';
+          
+          // Remove any existing error message
+          const existingError = formContainer.querySelector('.error-message');
+          if (existingError) {
+            existingError.remove();
+          }
+          
+          formContainer.appendChild(errorMessage);
+          
+          // Remove error message after 5 seconds
+          setTimeout(() => {
+            errorMessage.remove();
+          }, 5000);
+        }
+        });
+      } else {
+        console.error('Form elements not found');
+      }
+    </script>
+  </body>
+</html>
