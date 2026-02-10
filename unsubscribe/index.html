@@ -79,7 +79,11 @@
 
     <script>
       (function () {
-        const API_URL = "https://fractal-boston-events.vercel.app/unsubscribe";
+        // Use localhost API when running locally, otherwise use production
+        const isLocalhost = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+        const API_URL = isLocalhost 
+          ? "http://localhost:3000/api/unsubscribe"
+          : "https://fractal-boston-events.vercel.app/api/unsubscribe";
 
         const params = new URLSearchParams(window.location.search);
         const token = params.get("token");
