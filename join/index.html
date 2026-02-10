@@ -60,18 +60,6 @@
             <div id="emailSuggestion" class="email-suggestion"></div>
           </div>
 
-          <div class="checkbox-group">
-            <div class="checkbox-item">
-              <input type="checkbox" id="newsletter" name="newsletter" checked />
-              <label for="newsletter">Subscribe to the newsletter for updates (~1 per month)</label>
-            </div>
-
-            <div class="checkbox-item">
-              <input type="checkbox" id="events" name="events" checked />
-              <label for="events">Email me about upcoming events (~1 per week)</label>
-            </div>
-          </div>
-
           <div class="submit-button-container">
             <div class="submit-cta">
               <button type="submit">✨ Join the crew ✨</button>
@@ -131,8 +119,6 @@
         const confirmationMessage = document.getElementById('confirmationMessage');
         
         const email = emailInput.value.trim();
-        const newsletter = document.getElementById('newsletter').checked;
-        const events = document.getElementById('events').checked;
 
         console.log('Submitting with email:', email);
 
