@@ -1,0 +1,7 @@
+exclude:
+  - CLAUDE.md
+  - AGENTS.md
+  - dev.sh
+  - CNAME
+  - README.md
+  - .gitignore
