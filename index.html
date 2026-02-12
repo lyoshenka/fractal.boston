@@ -71,15 +71,30 @@
             We choose to gather regularly, learn from each other, and live a better life surrounded by friends.
           </p>
 
-          <div class="buttons">
-            <a
-              href="/join"
-              class="main-cta"
-              id="interestFormLink"
-            >
-              <button class="block accent">✨ Sign me up ✨</button></a
-            >
-         </div>
+          <div id="heroCtaContainer" class="buttons">
+            <a href="/join" class="main-cta" id="interestFormLink">
+              <button class="block accent">✨ Sign me up ✨</button>
+            </a>
+          </div>
+
+          <div id="heroFormContainer" class="center">
+            <form id="heroSubscribeForm" action="javascript:void(0);" method="post" novalidate>
+              <div class="form-group">
+                <input type="email" id="heroEmail" name="email" required placeholder="name@domain.com" />
+              </div>
+              <div class="submit-button-container">
+                <div class="submit-cta">
+                  <button type="submit">✨ Subscribe ✨</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div id="heroConfirmationMessage" class="confirmation-message" style="display: none;">
+            <h3>Check your email!</h3>
+            <p>Let&rsquo;s make sure our emails can reach you.</p>
+            <p>Please check your email and click the verification link.</p>
+          </div>
         </div>
       </div>
 
@@ -182,26 +197,32 @@
           </p>
         </div>
         <div class="stay-connected card">
-          <h3>Be In Touch</h3>
-          <p>
-            <strong>Ready to join?</strong> <a href="/join" target="_blank" rel="noopener noreferrer nofollow">Get our events in your inbox.</a>
-          </p>
-          <p>
-            <strong>Just curious?</strong> <a href="/calendar" target="_blank" rel="noopener noreferrer nofollow">Come to an event</a> or<br/>subscribe to get updates about what we&rsquo;re building:
-          </p>
-          <div class="center">
-            <iframe
-              src="https://fractalboston.substack.com/embed"
-              style="
-                width: 100%;
-                max-width: 550px;
-                height: 150px;
-                border: none;
-                background: transparent;
-              "
-              frameborder="0"
-              scrolling="no"
-            ></iframe>
+          <div id="footerSignupContent">
+            <h3>Be In Touch</h3>
+            <p>
+              <strong>Ready to join?</strong> <a href="/calendar" target="_blank" rel="noopener noreferrer nofollow">Come to an event</a>
+            </p>
+            <p>
+              <strong>Just curious?</strong> Subscribe for updates about events and what we&rsquo;re building:
+            </p>
+            <div id="footerFormContainer" class="center">
+              <form id="footerSubscribeForm" action="javascript:void(0);" method="post" novalidate>
+                <div class="form-group">
+                  <input type="email" id="footerEmail" name="email" required placeholder="name@domain.com" />
+                  <div id="footerEmailSuggestion" class="email-suggestion"></div>
+                </div>
+                <div class="submit-button-container">
+                  <div class="submit-cta">
+                    <button type="submit">✨ Subscribe ✨</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div id="footerConfirmationMessage" class="confirmation-message" style="display: none;">
+            <h3>Check your email!</h3>
+            <p>Let&rsquo;s make sure our emails can reach you.</p>
+            <p>Please check your email and click the verification link.</p>
           </div>
         </div>
 
@@ -212,25 +233,205 @@
       </footer>
     </main>
 
-    <script>
-      document
-        .getElementById("interestFormLink")
-        .addEventListener("click", function () {
-          gtag("event", "button_click", {
-            event_category: "engagement",
-            event_label: "Interest Form Link Click",
-          });
+    <script type="module">
+      import emailSpellChecker from 'https://cdn.jsdelivr.net/npm/@zootools/email-spell-checker@1.12.0/+esm';
+      const transitionMs = 300;
+      const isLocalhost = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+      const API_URL = isLocalhost
+        ? "http://localhost:3000/api/subscribe"
+        : "https://fractal-boston-events.vercel.app/api/subscribe";
+
+      function triggerJiggle(input) {
+        input.classList.add('jiggle');
+        input.addEventListener('animationend', function onEnd() {
+          input.classList.remove('jiggle');
+          input.removeEventListener('animationend', onEnd);
+        }, { once: true });
+      }
+
+      function renderError(container) {
+        const errorMessage = document.createElement('div');
+        errorMessage.className = 'error-message';
+        errorMessage.style.color = '#ff4444';
+        errorMessage.style.marginTop = '1rem';
+        errorMessage.textContent = 'Failed to subscribe. Please try again later.';
+
+        const existingError = container.querySelector('.error-message');
+        if (existingError) existingError.remove();
+        container.appendChild(errorMessage);
+
+        setTimeout(() => errorMessage.remove(), 5000);
+      }
+
+      async function submitSubscription(email) {
+        const response = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
         });
 
-      document
-        .getElementById("coursesSummer2025Link")
-        .addEventListener("click", function () {
-          gtag("event", "button_click", {
-            event_category: "engagement",
-            event_label: "Courses Summer 2025 Link Click",
-          });
-        });
+        const data = await response.json();
+        if (!response.ok || !data.success) {
+          throw new Error(data.error || 'Failed to subscribe');
+        }
+      }
 
+      function setupSubscribeForm(options) {
+        const {
+          formId,
+          emailInputId,
+          formContainerId,
+          confirmationId,
+          eventLabel,
+          suggestionId,
+          signupContentId,
+          lockCardSelector,
+          confirmationDisplay = 'block',
+        } = options;
+
+        const form = document.getElementById(formId);
+        const emailInput = document.getElementById(emailInputId);
+        const formContainer = document.getElementById(formContainerId) || form;
+        const confirmationMessage = document.getElementById(confirmationId);
+        const signupContent = signupContentId ? document.getElementById(signupContentId) : null;
+        const lockCard = lockCardSelector ? form?.closest(lockCardSelector) : null;
+
+        if (!form || !emailInput || !formContainer || !confirmationMessage) {
+          return;
+        }
+
+        if (suggestionId) {
+          const suggestionContainer = document.getElementById(suggestionId);
+          if (suggestionContainer) {
+            emailInput.addEventListener('blur', function () {
+              const suggestion = emailSpellChecker.run({ email: emailInput.value });
+              if (suggestion) {
+                suggestionContainer.innerHTML =
+                  'Did you mean <a href="#" class="email-suggestion-link">' + suggestion.full + '</a>?';
+                const suggestionLink = suggestionContainer.querySelector('.email-suggestion-link');
+                suggestionLink.addEventListener('click', function (event) {
+                  event.preventDefault();
+                  emailInput.value = suggestion.full;
+                  suggestionContainer.innerHTML = '';
+                });
+              } else {
+                suggestionContainer.innerHTML = '';
+              }
+            });
+          }
+        }
+
+        form.addEventListener('submit', async function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          const email = emailInput.value.trim();
+          if (!email) {
+            triggerJiggle(emailInput);
+            return;
+          }
+
+          const submitButton = form.querySelector('button[type="submit"]');
+          submitButton.disabled = true;
+          submitButton.textContent = 'Subscribing...';
+
+          if (typeof gtag !== 'undefined') {
+            gtag("event", "form_submit", {
+              event_category: "engagement",
+              event_label: eventLabel,
+            });
+          }
+
+          try {
+            await submitSubscription(email);
+
+            if (lockCard) {
+              lockCard.style.minHeight = lockCard.offsetHeight + 'px';
+            }
+
+            if (signupContent) {
+              signupContent.style.opacity = '0';
+              signupContent.style.transition = 'opacity 0.3s ease-out';
+              setTimeout(() => {
+                signupContent.style.display = 'none';
+                confirmationMessage.style.display = confirmationDisplay;
+              }, transitionMs);
+              return;
+            }
+
+            formContainer.style.opacity = '0';
+            formContainer.style.transition = 'opacity 0.3s ease-out';
+            setTimeout(() => {
+              formContainer.style.display = 'none';
+              confirmationMessage.style.display = confirmationDisplay;
+            }, transitionMs);
+          } catch (error) {
+            console.error('Subscription error:', error);
+            submitButton.disabled = false;
+            submitButton.textContent = '✨ Subscribe ✨';
+            renderError(formContainer);
+          }
+        });
+      }
+
+      const interestFormLink = document.getElementById("interestFormLink");
+      const heroCtaContainer = document.getElementById("heroCtaContainer");
+      const heroFormContainer = document.getElementById("heroFormContainer");
+
+      if (interestFormLink && heroCtaContainer && heroFormContainer) {
+        interestFormLink.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          if (typeof gtag !== 'undefined') {
+            gtag("event", "button_click", {
+              event_category: "engagement",
+              event_label: "Interest Form Link Click",
+            });
+          }
+
+          if (heroFormContainer.style.display === 'block') {
+            return;
+          }
+
+          heroCtaContainer.style.opacity = '0';
+          heroCtaContainer.style.transition = 'opacity 0.3s ease-out';
+
+          setTimeout(() => {
+            heroCtaContainer.style.display = 'none';
+            heroFormContainer.style.display = 'block';
+            heroFormContainer.style.opacity = '0';
+            requestAnimationFrame(() => {
+              heroFormContainer.style.transition = 'opacity 0.3s ease-in';
+              heroFormContainer.style.opacity = '1';
+            });
+
+            const heroEmail = document.getElementById('heroEmail');
+            if (heroEmail) {
+              heroEmail.focus();
+            }
+          }, transitionMs);
+        });
+      }
+
+      setupSubscribeForm({
+        formId: 'footerSubscribeForm',
+        emailInputId: 'footerEmail',
+        formContainerId: 'footerFormContainer',
+        confirmationId: 'footerConfirmationMessage',
+        eventLabel: 'Footer Subscribe Form Submission',
+        suggestionId: 'footerEmailSuggestion',
+        signupContentId: 'footerSignupContent',
+        lockCardSelector: '.stay-connected',
+        confirmationDisplay: 'flex',
+      });
+
+      setupSubscribeForm({
+        formId: 'heroSubscribeForm',
+        emailInputId: 'heroEmail',
+        formContainerId: 'heroFormContainer',
+        confirmationId: 'heroConfirmationMessage',
+        eventLabel: 'Hero Subscribe Form Submission',
+      });
     </script>
   </body>
 </html>

@@ -411,6 +411,26 @@ a:hover {
   margin-bottom: 0;
 }
 
+#heroCtaContainer,
+#heroFormContainer {
+  transition: opacity 0.3s ease-out;
+}
+
+#heroFormContainer {
+  display: none;
+  opacity: 0;
+  max-width: 550px;
+  margin: 0 auto;
+}
+
+#heroSubscribeForm input[type="email"] {
+  max-width: 80%;
+}
+
+#heroConfirmationMessage {
+  margin-top: 2rem;
+}
+
 .hero-section::before {
   content: "✦";
   position: absolute;
@@ -652,6 +672,32 @@ svg {
   border-radius: 1rem;
   border: 2px solid var(--main-color);
   margin-bottom: 2rem;
+}
+
+.stay-connected #footerFormContainer {
+  max-width: 550px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.stay-connected #footerConfirmationMessage {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 2.5rem;
+  text-align: center;
+  z-index: 1;
+}
+
+#footerSubscribeForm input[type="email"] {
+  max-width: 80%;
+}
+
+#footerSubscribeForm input[type="email"].jiggle {
+  animation: jiggle 0.4s ease-in-out;
 }
 
 /* ==========================================
@@ -954,6 +1000,7 @@ header .decorative-element {
   font-size: 1.8rem;
   line-height: 1.7;
   margin-bottom: 1.5rem;
+  font-weight: 400;
 }
 
 .unsubscribe-page .unsubscribe-state h2 {
@@ -979,6 +1026,14 @@ header .decorative-element {
 /* ==========================================
    KEYFRAME ANIMATIONS
    ========================================== */
+
+@keyframes jiggle {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-14px); }
+  40% { transform: translateX(14px); }
+  60% { transform: translateX(-10px); }
+  80% { transform: translateX(10px); }
+}
 
 @keyframes wobble {
   0%, 100% { transform: rotate(-1deg); }
