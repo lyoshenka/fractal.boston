@@ -1228,8 +1228,8 @@ header .decorative-element {
 }
 
 .error-404-card {
-  background: linear-gradient(195deg, #fefefe 0%, #f0fdf4 100%);
-  border-radius: 35px 28px 42px 30px / 38% 32% 45% 28%;
+  background: transparent;
+  border-radius: 0 !important;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -1287,8 +1287,8 @@ header .decorative-element {
 }
 
 .error-404-helpful {
-  background: linear-gradient(165deg, #fefefe 0%, #f0fdf4 100%);
-  border-radius: 28px 35px 30px 38px / 32% 38% 28% 35%;
+  background: transparent;
+  border-radius: 0;
 }
 
 .error-404-helpful h3 {
