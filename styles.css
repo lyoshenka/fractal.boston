@@ -1070,3 +1070,148 @@ header .decorative-element {
     opacity: 0.15;
   }
 }
+
+/* ==========================================
+   CALENDAR HOW-TO PAGE
+   ========================================== */
+
+.calendar-howto-content {
+  margin: 2rem 0;
+}
+
+.calendar-howto-content h2 {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.disclaimer-box {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 3px solid #d97706;
+  border-radius: 20px 80px 30px 70px / 30% 20% 30% 20%;
+  padding: 2rem;
+  margin: 2rem 0;
+}
+
+.disclaimer-box p {
+  margin: 0;
+  color: #78350f;
+  font-weight: 500;
+}
+
+.calendar-links-section {
+  background: linear-gradient(195deg, #fefefe 0%, #f0fdf4 100%);
+  border-radius: 25px 40px 30px 35px / 35% 30% 40% 25%;
+}
+
+.calendar-links-section h3::after {
+  transform: scaleX(0.6) rotate(-0.8deg);
+}
+
+.visual-instructions-section {
+  background: linear-gradient(165deg, #fefefe 0%, #f0fdf4 100%);
+  border-radius: 30px 25px 40px 35px / 30% 35% 25% 40%;
+}
+
+.visual-instructions-section h3::after {
+  transform: scaleX(0.6) rotate(-1deg);
+}
+
+.instruction-image-container {
+  margin: 2rem 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.instruction-image {
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  border-radius: 20px 80px 30px 70px / 30% 20% 30% 20%;
+  border: 3px solid var(--main-color);
+  box-shadow: 4px 4px 0 rgba(5, 150, 105, 0.2);
+}
+
+.instruction-image:nth-child(1) {
+  transform: rotate(1deg);
+}
+
+.instruction-image:nth-child(2) {
+  transform: rotate(-1.5deg);
+}
+
+.instruction-image:nth-child(3) {
+  transform: rotate(0.8deg);
+}
+
+.instruction-image:nth-child(4) {
+  transform: rotate(-1deg);
+}
+
+.image-caption {
+  font-style: italic;
+  color: #6b7280;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.visual-instructions-section ul {
+  margin-left: 2rem;
+}
+
+.visual-instructions-section ul li {
+  margin-bottom: 0.8rem;
+}
+
+.submit-event-section {
+  background: linear-gradient(225deg, #fefefe 0%, #f0fdf4 100%);
+  border-radius: 35px 30px 25px 40px / 40% 25% 35% 30%;
+}
+
+.submit-event-section h3::after {
+  transform: scaleX(0.6) rotate(-0.7deg);
+}
+
+.recurring-events-section {
+  background: linear-gradient(315deg, #fefefe 0%, #f0fdf4 100%);
+  border-radius: 28px 32px 38px 26px / 32% 28% 36% 30%;
+}
+
+.recurring-events-section h3::after {
+  transform: scaleX(0.6) rotate(-0.9deg);
+}
+
+.additional-images-section {
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  padding: 1rem 0;
+}
+
+.instruction-images-side-by-side {
+  margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.instruction-images-side-by-side .instruction-image {
+  width: 100%;
+  max-width: 800px;
+}
+
+@media screen and (min-width: 900px) {
+  .instruction-images-side-by-side {
+    flex-direction: row;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .instruction-images-side-by-side .instruction-image {
+    flex: 1;
+    max-width: 400px;
+  }
+}
