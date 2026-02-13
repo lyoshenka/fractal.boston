@@ -1215,3 +1215,121 @@ header .decorative-element {
     max-width: 400px;
   }
 }
+
+/* ==========================================
+   404 ERROR PAGE
+   ========================================== */
+
+.error-404-section {
+  margin: 3rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.error-404-card {
+  background: linear-gradient(195deg, #fefefe 0%, #f0fdf4 100%);
+  border-radius: 35px 28px 42px 30px / 38% 32% 45% 28%;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.error-404-card::before {
+  content: "◯";
+  position: absolute;
+  top: 30px;
+  left: 40px;
+  font-size: 3rem;
+  color: var(--main-color);
+  opacity: 0.2;
+  animation: float 4s ease-in-out infinite;
+}
+
+.error-404-card::after {
+  content: "◆";
+  position: absolute;
+  bottom: 30px;
+  right: 40px;
+  font-size: 2.5rem;
+  color: var(--main-color);
+  opacity: 0.2;
+  animation: float 5s ease-in-out infinite reverse;
+}
+
+.error-number {
+  font-family: var(--fractul-font);
+  font-size: 12rem;
+  color: var(--main-color);
+  margin: 2rem 0 1rem;
+  line-height: 1;
+  animation: wobble 6s ease-in-out infinite;
+  transform: rotate(-2deg);
+}
+
+.error-404-card h3 {
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+  font-size: 3.2rem;
+}
+
+.error-404-card h3::after {
+  transform: scaleX(0.7) rotate(-1deg);
+}
+
+.error-404-card p {
+  font-size: 1.9rem;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  max-width: 60rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.error-404-helpful {
+  background: linear-gradient(165deg, #fefefe 0%, #f0fdf4 100%);
+  border-radius: 28px 35px 30px 38px / 32% 38% 28% 35%;
+}
+
+.error-404-helpful h3 {
+  margin-top: 1rem;
+}
+
+.error-404-helpful h3::after {
+  transform: scaleX(0.6) rotate(-0.8deg);
+}
+
+.error-404-helpful ul {
+  text-align: left;
+  max-width: 50rem;
+  margin: 0 auto;
+}
+
+.error-404-helpful ul li {
+  font-size: 1.8rem;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+.error-404-helpful ul li a {
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+@media screen and (max-width: 650px) {
+  .error-number {
+    font-size: 8rem;
+  }
+
+  .error-404-card h3 {
+    font-size: 2.4rem;
+  }
+
+  .error-404-card::before,
+  .error-404-card::after {
+    display: none;
+  }
+}
